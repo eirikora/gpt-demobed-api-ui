@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "gpt-assistants-api-ui"
+name = "gpt-demobed-api-ui"
 version = "0.1.0"
 description = ""
 authors = ["ryo-ma <saka_ro@yahoo.co.jp>"]
