@@ -392,7 +392,10 @@ if not authenticate_password(some_password):
     st.error("Ugyldig/feil passord. Ingen aksess.")
     st.stop()
 else:
-    st.success("Du er logget inn! Vennligst velg ønsket assistent i venstre meny!", icon=":material/thumb_up:")
+    if single_agent_id:
+        st.success("Du er logget inn!", icon=":material/thumb_up:")
+    else:
+        st.success("Du er logget inn! Vennligst velg ønsket assistent i venstre meny!", icon=":material/thumb_up:")
 
 def main():
     # Retrieve the assistant ID from the URL parameter if provided
