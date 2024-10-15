@@ -32,7 +32,6 @@ if 'counter' not in st.session_state:
 
 # Increment the counter each time the page is reloaded
 st.session_state.counter += 1
-st.session_state['is_singlemode'] = False
 
 def str_to_bool(str_input):
     if not isinstance(str_input, str):
@@ -389,14 +388,6 @@ def authenticate_password(some_password):
 
 some_password = st.text_input("Logg inn med hemmelig passord her:", type="password")
 
-if not authenticate_password(some_password):
-    st.error("Ugyldig/feil passord. Ingen aksess.")
-    st.stop()
-else:
-    if st.session_state['is_singlemode']:
-        st.success("Du er logget inn!", icon=":material/thumb_up:")
-    else:
-        st.success("Du er logget inn! Vennligst velg ønsket assistent i venstre meny!", icon=":material/thumb_up:")
 
 def main():
     # Retrieve the assistant ID from the URL parameter if provided
@@ -440,8 +431,16 @@ def main():
                     print(f"Går for URL-valgt agent {single_agent_title}({single_agent_id})!")
                     break
 
+    if not authenticate_password(some_password):
+        st.error("Ugyldig/feil passord. Ingen aksess.")
+        st.stop()
+    else:
+        if single_agent_id:
+            st.success("Du er logget inn!", icon=":material/thumb_up:")
+        else:
+            st.success("Du er logget inn! Vennligst velg ønsket assistent i venstre meny!", icon=":material/thumb_up:")
+
     if single_agent_id:
-        st.session_state['is_singlemode'] = True
         st.session_state['mapfile_name'] = single_agent_id + "_sourcemap.csv"
         st.cache_data.clear()
         load_chat_screen(single_agent_id, single_agent_title)
